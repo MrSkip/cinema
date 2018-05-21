@@ -1,4 +1,4 @@
-package com.countrycinema.ua.security;
+package com.countrycinema.ua.config.security;
 
 import com.countrycinema.ua.common.Logger;
 import com.countrycinema.ua.common.enums.UserRole;
@@ -22,18 +22,17 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) {
-        Logger.info("Init parameters method [load user by email] === >>> " + email);
-//        com.countrycinema.ua.persistence.entity.User userFromDB = userRepository.findByEmail(email);
-//        if (userFromDB == null) {
-//            throw new BadCredentialsException(email);
-//        }
-//
-//        UserRole role = userFromDB.getRole();
-//        final Set<GrantedAuthority> authorities = new HashSet<>();
-//        authorities.add(new SimpleGrantedAuthority(role.getRole()));
-//        return new User(userFromDB.getEmail(), userFromDB.getPassword(), userFromDB.isActivated(),
-//                        true, true, true, authorities);
-        return null;
+        Logger.info("Attempt to load user by email " + email);
+        com.countrycinema.ua.persistence.entity.User userFromDB = userRepository.findOneByEmail(email);
+        if (userFromDB == null) {
+            throw new BadCredentialsException(email);
+        }
+
+        UserRole role = userFromDB.getRole();
+        final Set<GrantedAuthority> authorities = new HashSet<>();
+        authorities.add(new SimpleGrantedAuthority(role.getName()));
+        return new User(userFromDB.getEmail(), userFromDB.getPassword(), userFromDB.isActivated(),
+                true, true, true, authorities);
     }
 }
 

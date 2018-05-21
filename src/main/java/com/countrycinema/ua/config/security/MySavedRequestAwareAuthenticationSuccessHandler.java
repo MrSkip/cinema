@@ -1,4 +1,4 @@
-package com.countrycinema.ua.security;
+package com.countrycinema.ua.config.security;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;

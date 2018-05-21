@@ -8,6 +8,4 @@ public interface ServiceCore<E extends IdComponent, ID> {
 
     void delete(ID id);
 
-
-
 }

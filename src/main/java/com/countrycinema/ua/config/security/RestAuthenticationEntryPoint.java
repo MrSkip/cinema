@@ -1,4 +1,4 @@
-package com.countrycinema.ua.security;
+package com.countrycinema.ua.config.security;
 
 import com.countrycinema.ua.common.Logger;
 import org.springframework.security.core.AuthenticationException;

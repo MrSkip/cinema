@@ -26,6 +26,7 @@ public class ServiceCoreImpl<E extends IdComponent, ID> implements ServiceCore<E
     }
 
     @Override
+    @Transactional
     public void delete(ID id) {
         E record = getOne(id);
         repository.delete(record);

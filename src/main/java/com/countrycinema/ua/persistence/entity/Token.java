@@ -1,6 +1,7 @@
 package com.countrycinema.ua.persistence.entity;
 
 import com.countrycinema.ua.persistence.entity.core.id.IdComponentLong;
+import com.countrycinema.ua.persistence.entity.core.time.TimeComponentLong;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -11,9 +12,8 @@ import javax.persistence.*;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name =
-        "tokens")
-public class Token extends IdComponentLong<Token> {
+@Table(name = "tokens")
+public class Token extends TimeComponentLong<Token> {
 
     @OneToOne
     @JoinColumn(name = "user_id")

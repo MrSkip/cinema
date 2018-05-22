@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CompanyRepository extends OptionalRepository<Company, String> {
+    Company findOneByEmail(String email);
 }

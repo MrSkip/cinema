@@ -7,12 +7,10 @@ import com.countrycinema.ua.dto.user.authorization.UserRequestNewPassDTO;
 import com.countrycinema.ua.dto.user.authorization.UserResetPassDTO;
 import com.countrycinema.ua.service.AuthorizationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-@RestController(value = "/api/public")
+@RestController()
+@RequestMapping("/api/")
 public class AuthorizationController {
 
     private final AuthorizationService authorizationService;
@@ -22,22 +20,22 @@ public class AuthorizationController {
         this.authorizationService = authorizationService;
     }
 
-    @PostMapping("/login")
+    @PostMapping("public/login")
     public UserLoginResponseDTO login(@RequestBody UserLoginRequestDTO loginDTO) {
         return authorizationService.login(loginDTO);
     }
 
-    @GetMapping("/logout")
+    @GetMapping("protected/logout")
     public MessageDTO logout() {
         return authorizationService.logout();
     }
 
-    @PostMapping("/forgot-password")
+    @PostMapping("public/forgot-password")
     public MessageDTO login(@RequestBody UserRequestNewPassDTO newPassDTO) {
         return authorizationService.requestNewPassword(newPassDTO);
     }
 
-    @PostMapping("/approve-forgotten-password")
+    @PostMapping("public/approve-forgotten-password")
     public MessageDTO login(@RequestBody UserResetPassDTO resetPassDTO) {
         return authorizationService.submitForgottenPassword(resetPassDTO);
     }

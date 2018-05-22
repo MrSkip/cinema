@@ -1,6 +1,5 @@
 package com.countrycinema.ua.persistence.entity;
 
-import com.countrycinema.ua.persistence.entity.core.id.IdComponentLong;
 import com.countrycinema.ua.persistence.entity.core.time.TimeComponentLong;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -8,11 +7,11 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
-@Data
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "tokens")
+@Data
+@ToString(callSuper = true, exclude = "user")
+@EqualsAndHashCode(callSuper = true, exclude = "user")
 public class Token extends TimeComponentLong<Token> {
 
     @OneToOne

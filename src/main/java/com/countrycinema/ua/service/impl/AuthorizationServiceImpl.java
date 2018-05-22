@@ -1,7 +1,9 @@
 package com.countrycinema.ua.service.impl;
 
 import com.countrycinema.ua.common.Logger;
+import com.countrycinema.ua.component.MailComponent;
 import com.countrycinema.ua.dto.MessageDTO;
+import com.countrycinema.ua.dto.mail.MailDTO;
 import com.countrycinema.ua.dto.user.authorization.UserLoginRequestDTO;
 import com.countrycinema.ua.dto.user.authorization.UserLoginResponseDTO;
 import com.countrycinema.ua.dto.user.authorization.UserRequestNewPassDTO;
@@ -40,7 +42,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     @Autowired
     private TokenRepository tokenRepository;
     @Autowired
-    private UserService userService;
+    private MailComponent mailComponent;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -56,7 +58,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         User user = userRepository.findOneByEmail(loginDTO.getEmail())
                 .orElseThrow(() -> new BadInputParamException(CHECK_THE_USER_CREDENTIALS));
 
-        if (!passwordEncoder.matches(user.getPassword(), loginDTO.getPassword())) {
+        if (!passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
             Logger.error("Failed to authenticate : " + loginDTO.getEmail());
             throw new BadInputParamException(CHECK_THE_USER_CREDENTIALS);
         }
@@ -115,10 +117,13 @@ public class AuthorizationServiceImpl implements AuthorizationService {
                 .setUser(user);
         tokenRepository.save(token);
 
+        mailComponent.asyncSendMail(
+                MailDTO.asRawText("Request new pass", token.getToken(), user.getEmail()));
         return MessageDTO.of("Check your email");
     }
 
     @Override
+    @Transactional(noRollbackFor = BadInputParamException.class)
     public MessageDTO submitForgottenPassword(UserResetPassDTO resetPassDTO) {
         DTOValidator.validate(resetPassDTO);
         if (!Objects.equals(resetPassDTO.getPassword(), resetPassDTO.getRepeatPassword())) {
@@ -129,7 +134,19 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         Token token = tokenRepository
                 .findOneByToken(resetPassDTO.getToken())
                 .orElseThrow(() -> new BadInputParamException(message));
-//        token
-        return null;
+
+        if (LocalDateTime.now().minusHours(TOKEN_EXPIRED)
+                .compareTo(token.getCreatedTime()) < 0) {
+            tokenRepository.delete(token);
+            throw new BadInputParamException(message);
+        }
+
+        User user = token.getUser()
+                .setPassword(passwordEncoder.encode(resetPassDTO.getPassword()));
+        userRepository.save(user);
+
+        mailComponent.asyncSendMail(
+                MailDTO.asRawText("Password changed", "Changed", user.getEmail()));
+        return MessageDTO.of("The password has been updated");
     }
 }

@@ -10,11 +10,11 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.time.LocalDate;
 
-@Data
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "users")
+@Data
+@ToString(callSuper = true, exclude = {"company", "token"})
+@EqualsAndHashCode(callSuper = true, exclude = {"company", "token"})
 public class User extends TimeComponentString<User> {
 
     @Column(name = "username", unique = true)
@@ -34,13 +34,13 @@ public class User extends TimeComponentString<User> {
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private UserRole role;
-    @Column(name = "activated", columnDefinition = "default false")
+    @Column(name = "activated", columnDefinition = "boolean default false")
     private boolean activated = false;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Token token;
 
     @ManyToOne
-    @JoinColumn(name = "company_id")
+    @JoinColumn(name = "company_id", nullable = false)
     private Company company;
 }

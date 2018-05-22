@@ -14,6 +14,7 @@ import org.springframework.util.CollectionUtils;
 
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.util.concurrent.CompletableFuture;
 
 @Component
 @EnableConfigurationProperties(MailProperties.class)
@@ -29,15 +30,19 @@ public class MailComponent {
         this.mailProperties = mailProperties;
     }
 
+    public void asyncSendMail(MailDTO mailDTO) {
+        CompletableFuture.runAsync(() -> sendMail(mailDTO));
+    }
+
     public void sendMail(MailDTO mailDTO) {
         try {
             final MimeMessage message = mailSender.createMimeMessage();
-            message.setHeader(mailProperties.getHeaderParam(), mailProperties.getEncodingOptions());
+//            message.setHeader(mailProperties.getHeaderParam(), mailProperties.getEncodingOptions());
 
             boolean multipart = !Strings.isNullOrEmpty(mailDTO.getAttachmentName());
             final MimeMessageHelper helper = new MimeMessageHelper(message, multipart);
 
-            if (!CollectionUtils.isEmpty(mailDTO.getRecipients())) {
+            if (CollectionUtils.isEmpty(mailDTO.getRecipients())) {
                 String error = "The recipient was not specified";
                 Logger.error(error);
                 throw new InternalException(error);

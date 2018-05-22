@@ -17,16 +17,18 @@ import java.util.Set;
 
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
+    private final UserRepository userRepository;
+
     @Autowired
-    private UserRepository userRepository;
+    public UserDetailServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String email) {
         Logger.info("Attempt to load user by email " + email);
-        com.countrycinema.ua.persistence.entity.User userFromDB = userRepository.findOneByEmail(email);
-        if (userFromDB == null) {
-            throw new BadCredentialsException(email);
-        }
+        com.countrycinema.ua.persistence.entity.User userFromDB = userRepository.findOneByEmail(email)
+                .orElseThrow(() -> new BadCredentialsException(email));
 
         UserRole role = userFromDB.getRole();
         final Set<GrantedAuthority> authorities = new HashSet<>();

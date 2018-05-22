@@ -13,6 +13,10 @@ public class IdComponentString<T extends IdComponentString> implements IdCompone
     @Column(name = "id")
     protected String id;
 
+    public IdComponentString() {
+        id = UUID.randomUUID().toString();
+    }
+
     @Override
     public String getId() {
         return id;

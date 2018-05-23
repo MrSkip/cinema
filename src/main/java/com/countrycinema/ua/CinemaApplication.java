@@ -49,7 +49,7 @@ public class CinemaApplication {
                                     .setActivated(true)
                                     .setUsername("mrskip")
                                     .setDateOfBorn(LocalDate.now().minusYears(21))
-                                    .setFirstName("dmytro")
+                                    .setFirstName("дмитро")
                                     .setLastName("mula")
                                     .setEmail(userEmail)
                                     .setRole(UserRole.SUPER_ADMIN)

@@ -14,7 +14,6 @@ import com.countrycinema.ua.persistence.entity.User;
 import com.countrycinema.ua.persistence.repository.TokenRepository;
 import com.countrycinema.ua.persistence.repository.user.UserRepository;
 import com.countrycinema.ua.service.AuthorizationService;
-import com.countrycinema.ua.service.UserService;
 import com.countrycinema.ua.utils.DTOValidator;
 import com.countrycinema.ua.utils.Validator;
 import org.modelmapper.ModelMapper;
@@ -106,10 +105,10 @@ public class AuthorizationServiceImpl implements AuthorizationService {
                 .withException("Email could not be empty");
         User user = userRepository
                 .findOneByEmail(newPassDTO.getEmail())
-                .orElseThrow(() -> new BadInputParamException("No such user exception"));;
+                .orElseThrow(() -> new BadInputParamException("No such user exception"));
 
         if (user.getToken() != null) {
-            tokenRepository.delete(user.getToken());
+            user.setToken(null);
         }
 
         Token token = new Token()
@@ -137,12 +136,13 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
         if (LocalDateTime.now().minusHours(TOKEN_EXPIRED)
                 .compareTo(token.getCreatedTime()) < 0) {
-            tokenRepository.delete(token);
+            token.getUser().setToken(null);
             throw new BadInputParamException(message);
         }
 
         User user = token.getUser()
-                .setPassword(passwordEncoder.encode(resetPassDTO.getPassword()));
+                .setPassword(passwordEncoder.encode(resetPassDTO.getPassword()))
+                .setToken(null);
         userRepository.save(user);
 
         mailComponent.asyncSendMail(

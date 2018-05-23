@@ -6,7 +6,7 @@ import java.time.ZoneOffset;
 public interface TimeComponent {
 
     default LocalDateTime nowTime() {
-        return LocalDateTime.now(ZoneOffset.UTC);
+        return LocalDateTime.now();
     }
 
     LocalDateTime getCreatedTime();

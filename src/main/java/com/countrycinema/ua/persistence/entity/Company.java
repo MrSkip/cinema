@@ -1,6 +1,7 @@
 package com.countrycinema.ua.persistence.entity;
 
-import com.countrycinema.ua.persistence.entity.core.time.TimeComponentString;
+import com.countrycinema.ua.persistence.entity._core.time.TimeComponentString;
+import com.countrycinema.ua.persistence.entity.equipment.Equipment;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -24,5 +25,9 @@ public class Company extends TimeComponentString<Company> {
 
     @OneToMany(mappedBy = "company", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<User> users;
+    @OneToMany(mappedBy = "company", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<Hall> halls;
+    @OneToMany(mappedBy = "company", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<Equipment> equipment;
 
 }

@@ -15,6 +15,7 @@ import com.countrycinema.ua.persistence.repository.TokenRepository;
 import com.countrycinema.ua.persistence.repository.user.UserRepository;
 import com.countrycinema.ua.service.AuthorizationService;
 import com.countrycinema.ua.utils.DTOValidator;
+import com.countrycinema.ua.utils.SecurityUtil;
 import com.countrycinema.ua.utils.Validator;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
@@ -112,7 +114,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         }
 
         Token token = new Token()
-                .setToken(UUID.randomUUID().toString())
+                .setToken(SecurityUtil.getRandomSecretKey())
                 .setUser(user);
         tokenRepository.save(token);
 

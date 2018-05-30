@@ -1,7 +1,7 @@
 package com.countrycinema.ua.service.core;
 
 import com.countrycinema.ua.exception.ObjectNotFoundException;
-import com.countrycinema.ua.persistence.entity.core.id.IdComponent;
+import com.countrycinema.ua.persistence.entity._core.id.IdComponent;
 import com.countrycinema.ua.persistence.repository._core.OptionalRepository;
 import org.springframework.transaction.annotation.Transactional;
 

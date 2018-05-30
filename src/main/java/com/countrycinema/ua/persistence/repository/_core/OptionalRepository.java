@@ -1,6 +1,6 @@
 package com.countrycinema.ua.persistence.repository._core;
 
-import com.countrycinema.ua.persistence.entity.core.id.IdComponent;
+import com.countrycinema.ua.persistence.entity._core.id.IdComponent;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 

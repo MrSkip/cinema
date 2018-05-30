@@ -12,7 +12,7 @@ public interface UserService {
 
     User getCurrentUser();
 
-    Company getCurrentComopany();
+    Company getCurrentCompany();
 
     User update(UserRequestDTO requestDTO);
 

@@ -1,6 +1,6 @@
 package com.countrycinema.ua.service.core;
 
-import com.countrycinema.ua.persistence.entity.core.id.IdComponent;
+import com.countrycinema.ua.persistence.entity._core.id.IdComponent;
 import com.countrycinema.ua.persistence.repository._core.OptionalRepository;
 
 import java.util.concurrent.ConcurrentHashMap;

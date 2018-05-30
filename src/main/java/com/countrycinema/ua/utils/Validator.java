@@ -3,7 +3,7 @@ package com.countrycinema.ua.utils;
 import com.countrycinema.ua.common.Logger;
 import com.countrycinema.ua.exception.BadInputParamException;
 import com.countrycinema.ua.exception.ObjectNotFoundException;
-import com.countrycinema.ua.persistence.entity.core.id.IdComponent;
+import com.countrycinema.ua.persistence.entity._core.id.IdComponent;
 import com.google.common.base.Strings;
 import org.springframework.http.HttpStatus;
 

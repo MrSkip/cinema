@@ -1,6 +1,8 @@
-package com.countrycinema.ua.persistence.entity.core.time;
+package com.countrycinema.ua.persistence.entity._core.time;
 
-import com.countrycinema.ua.persistence.entity.core.id.IdComponentString;
+import com.countrycinema.ua.persistence.entity._core.id.IdComponentLong;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
@@ -9,7 +11,9 @@ import javax.persistence.PreUpdate;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
-public class TimeComponentString<T extends TimeComponentString> extends IdComponentString<T> implements TimeComponent {
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
+public class TimeComponentLong<T extends TimeComponentLong> extends IdComponentLong<T> implements TimeComponent {
 
     @Column(name = "createdTime", nullable = false, updatable = false)
     protected LocalDateTime createdTime;
@@ -37,4 +41,5 @@ public class TimeComponentString<T extends TimeComponentString> extends IdCompon
     public LocalDateTime getModifiedTime() {
         return modifiedTime;
     }
+
 }

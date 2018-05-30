@@ -1,6 +1,6 @@
 package com.countrycinema.ua.dto.core;
 
-import com.countrycinema.ua.persistence.entity.core.id.IdComponent;
+import com.countrycinema.ua.persistence.entity._core.id.IdComponent;
 import lombok.Data;
 
 @Data

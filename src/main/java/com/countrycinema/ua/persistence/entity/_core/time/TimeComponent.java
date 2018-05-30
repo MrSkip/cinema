@@ -1,7 +1,6 @@
-package com.countrycinema.ua.persistence.entity.core.time;
+package com.countrycinema.ua.persistence.entity._core.time;
 
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 
 public interface TimeComponent {
 

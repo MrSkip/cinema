@@ -1,6 +1,6 @@
 package com.countrycinema.ua.persistence.entity;
 
-import com.countrycinema.ua.persistence.entity.core.time.TimeComponentLong;
+import com.countrycinema.ua.persistence.entity._core.time.TimeComponentLong;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;

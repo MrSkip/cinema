@@ -39,7 +39,7 @@ public class UserServiceImpl extends ServiceCoreImpl<User, String> implements Us
     }
 
     @Override
-    public Company getCurrentComopany() {
+    public Company getCurrentCompany() {
         return getCurrentUser().getCompany();
     }
 
@@ -55,7 +55,7 @@ public class UserServiceImpl extends ServiceCoreImpl<User, String> implements Us
 
     @Override
     public List<User> allForCompany(Pageable pageable) {
-        List<User> users = userRepository.findAllByCompanyId(getCurrentComopany().getId());
+        List<User> users = userRepository.findAllByCompanyId(getCurrentCompany().getId());
         // TODO: 20.05.18 how to map to the DTO
         return null;
     }

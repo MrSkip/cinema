@@ -1,4 +1,4 @@
-package com.countrycinema.ua.persistence.entity.core.id;
+package com.countrycinema.ua.persistence.entity._core.id;
 
 import javax.persistence.Column;
 import javax.persistence.Id;

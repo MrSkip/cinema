@@ -1,13 +1,12 @@
 package com.countrycinema.ua.persistence.entity;
 
 import com.countrycinema.ua.common.enums.UserRole;
-import com.countrycinema.ua.persistence.entity.core.time.TimeComponentString;
+import com.countrycinema.ua.persistence.entity._core.time.TimeComponentString;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import java.time.LocalDate;
 
 @Entity

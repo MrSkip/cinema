@@ -8,6 +8,7 @@ import com.countrycinema.ua.dto.user.authorization.UserLoginRequestDTO;
 import com.countrycinema.ua.dto.user.authorization.UserLoginResponseDTO;
 import com.countrycinema.ua.dto.user.authorization.UserRequestNewPassDTO;
 import com.countrycinema.ua.dto.user.authorization.UserResetPassDTO;
+import com.countrycinema.ua.dto.user.registration.UserRegistrationDTO;
 import com.countrycinema.ua.exception.BadInputParamException;
 import com.countrycinema.ua.persistence.entity.Token;
 import com.countrycinema.ua.persistence.entity.User;
@@ -28,10 +29,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.UUID;
 
 @Service
 public class AuthorizationServiceImpl implements AuthorizationService {
@@ -51,6 +50,12 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     private AuthenticationManager authManager;
     @Autowired
     private ModelMapper modelMapper;
+
+    private static void checkPassportsIdentity(String firstPass, String secondPass) {
+        if (!Objects.equals(firstPass, secondPass)) {
+            throw new BadInputParamException("Passwords didn't match");
+        }
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -127,9 +132,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     @Transactional(noRollbackFor = BadInputParamException.class)
     public MessageDTO submitForgottenPassword(UserResetPassDTO resetPassDTO) {
         DTOValidator.validate(resetPassDTO);
-        if (!Objects.equals(resetPassDTO.getPassword(), resetPassDTO.getRepeatPassword())) {
-            throw new BadInputParamException("Passwords didn't match");
-        }
+        checkPassportsIdentity(resetPassDTO.getPassword(), resetPassDTO.getRepeatPassword());
 
         String message = "Could not reset password. Please submit a new reset password request";
         Token token = tokenRepository
@@ -151,4 +154,45 @@ public class AuthorizationServiceImpl implements AuthorizationService {
                 MailDTO.asRawText("Password changed", "Changed", user.getEmail()));
         return MessageDTO.of("The password has been updated");
     }
+
+    @Override
+    @Transactional
+    public UserLoginResponseDTO finishRegistration(UserResetPassDTO dto) {
+        DTOValidator.validate(dto);
+        checkPassportsIdentity(dto.getPassword(), dto.getRepeatPassword());
+
+        String message = "Registration failed";
+        Token token = tokenRepository
+                .findOneByToken(dto.getToken())
+                .orElseThrow(() -> new BadInputParamException(message));
+
+        User user = token.getUser()
+                .setPassword(passwordEncoder.encode(dto.getPassword()))
+                .setActivated(true)
+                .setToken(null);
+        userRepository.save(user);
+
+        return login(new UserLoginRequestDTO(user.getEmail(), dto.getPassword()));
+    }
+
+    @Override
+    @Transactional
+    public MessageDTO signUp(UserRegistrationDTO dto) {
+        DTOValidator.validate(dto);
+
+        if (userRepository.findOneByEmail(dto.getEmail()).isPresent()) {
+            throw new BadInputParamException("You could not create user with such email");
+        }
+
+        String key = SecurityUtil.getRandomSecretKey();
+        User mappedUser = modelMapper.map(dto, User.class).setPassword(key);
+
+        userRepository.save(mappedUser);
+        tokenRepository.save(new Token(key).setUser(mappedUser));
+
+        mailComponent.asyncSendMail(
+                MailDTO.asRawText("Finish your registration", key, mappedUser.getEmail()));
+        return MessageDTO.of("Check out your email and finish the registration");
+    }
+
 }

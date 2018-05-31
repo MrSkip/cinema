@@ -5,6 +5,7 @@ import com.countrycinema.ua.dto.user.authorization.UserLoginRequestDTO;
 import com.countrycinema.ua.dto.user.authorization.UserLoginResponseDTO;
 import com.countrycinema.ua.dto.user.authorization.UserRequestNewPassDTO;
 import com.countrycinema.ua.dto.user.authorization.UserResetPassDTO;
+import com.countrycinema.ua.dto.user.registration.UserRegistrationDTO;
 
 public interface AuthorizationService {
 
@@ -16,4 +17,7 @@ public interface AuthorizationService {
 
     MessageDTO submitForgottenPassword(UserResetPassDTO resetPassDTO);
 
+    MessageDTO signUp(UserRegistrationDTO dto);
+
+    UserLoginResponseDTO finishRegistration(UserResetPassDTO resetPassDTO);
 }

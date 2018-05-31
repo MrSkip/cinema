@@ -1,5 +1,6 @@
 package com.countrycinema.ua;
 
+import com.countrycinema.ua.common.enums.Gender;
 import com.countrycinema.ua.common.enums.UserRole;
 import com.countrycinema.ua.persistence.entity.Company;
 import com.countrycinema.ua.persistence.entity.User;
@@ -51,6 +52,7 @@ public class CinemaApplication {
                                     .setDateOfBorn(LocalDate.now().minusYears(21))
                                     .setFirstName("дмитро")
                                     .setLastName("mula")
+                                    .setGender(Gender.MALE)
                                     .setEmail(userEmail)
                                     .setRole(UserRole.SUPER_ADMIN)
                                     .setPassword(passwordEncoder.encode("qweqwe"))

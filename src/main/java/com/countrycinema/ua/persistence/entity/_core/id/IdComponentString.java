@@ -23,7 +23,7 @@ public class IdComponentString<T extends IdComponentString> implements IdCompone
     }
 
     @Override
-    public T setId(String id) {
+    public T setIdBuild(String id) {
         return obtainEntity();
     }
 

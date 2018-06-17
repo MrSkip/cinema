@@ -15,8 +15,12 @@ public class IdComponentLong<T extends IdComponentLong> implements IdComponent<L
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Override
-    public T setId(Long id) {
+    public T setIdBuild(Long id) {
         return obtainEntity();
     }
 

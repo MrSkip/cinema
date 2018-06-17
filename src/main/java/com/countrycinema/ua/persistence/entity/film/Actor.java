@@ -2,6 +2,7 @@ package com.countrycinema.ua.persistence.entity.film;
 
 import com.countrycinema.ua.common.enums.FilmRole;
 import com.countrycinema.ua.common.enums.Gender;
+import com.countrycinema.ua.dto.film.actor.ActorRequestDTO;
 import com.countrycinema.ua.persistence.entity._core.time.TimeComponentLong;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,6 +11,9 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * Could contain producers and actors
+ */
 @Entity
 @Table(name = "actors")
 @Data
@@ -28,4 +32,10 @@ public class Actor extends TimeComponentLong<Actor> {
 
     @OneToMany(mappedBy = "actor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FilmActor> films;
+
+    public void fetch(ActorRequestDTO dto) {
+        name = dto.getName();
+        gender = dto.getGender();
+        age = dto.getAge();
+    }
 }

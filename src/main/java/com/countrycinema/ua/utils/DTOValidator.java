@@ -1,5 +1,6 @@
 package com.countrycinema.ua.utils;
 
+import com.countrycinema.ua.dto.film.trailer.TrailerRequestDTO;
 import com.countrycinema.ua.dto.user.authorization.UserLoginRequestDTO;
 import com.countrycinema.ua.dto.user.authorization.UserResetPassDTO;
 import com.countrycinema.ua.dto.user.registration.UserRegistrationDTO;
@@ -26,5 +27,9 @@ public class DTOValidator {
                         dto.getEmail(), dto.getFirstName(), dto.getLastName())
                 .withCheck(dto.getDateOfBorn(), dto.getGender())
                 .withException(ALL_FIELDS_REQUIRED);
+    }
+
+    public static void validate(TrailerRequestDTO dto) {
+//        Validator.validate(dto.g)
     }
 }

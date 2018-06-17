@@ -13,8 +13,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "film_actor")
 @Data
-@ToString(callSuper = true, exclude = {"film", "actor"})
-@EqualsAndHashCode(callSuper = true, exclude = {"film", "actor"})
+@ToString(callSuper = true, exclude = {"film", "actor", "filmProducer"})
+@EqualsAndHashCode(callSuper = true, exclude = {"film", "actor", "filmProducer"})
 public class FilmActor extends IdComponentLong<FilmActor> {
 
     @ManyToOne
@@ -23,5 +23,12 @@ public class FilmActor extends IdComponentLong<FilmActor> {
     @ManyToOne
     @JoinColumn(name = "actor_id")
     private Actor actor;
+
+    /**
+     * To defined a producers for film
+     */
+    @ManyToOne
+    @JoinColumn(name = "film_producer_id")
+    private Film filmProducer;
 
 }

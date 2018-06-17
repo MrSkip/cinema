@@ -20,6 +20,7 @@ public class FilmFormat extends IdComponentLong<FilmFormat> {
     @ManyToOne
     @JoinColumn(name = "film_id")
     private Film film;
+
     @ManyToOne
     @JoinColumn(name = "format_id")
     private Format format;

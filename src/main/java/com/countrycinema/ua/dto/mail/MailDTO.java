@@ -25,13 +25,6 @@ public class MailDTO {
 
     private boolean isHtml;
 
-    public String getFirstRecipient() {
-        if (CollectionUtils.isEmpty(recipients)) {
-            throw new InternalException("Could not get any recipient");
-        }
-        return recipients.get(0);
-    }
-
     public MailDTO(String subject, String message) {
         this.subject = subject;
         this.message = message;
@@ -50,7 +43,7 @@ public class MailDTO {
     }
 
     public static MailDTO as(String subject, String message, String recipient, boolean isHtml,
-                                    String attachmentName, InputStreamSource attachment) {
+                             String attachmentName, InputStreamSource attachment) {
         return new MailDTO(subject, message)
                 .setRecipients(Lists.newArrayList(recipient))
                 .setHtml(isHtml)
@@ -59,7 +52,7 @@ public class MailDTO {
     }
 
     public static MailDTO as(String subject, String message, List<String> recipients, boolean isHtml,
-                                    String attachmentName, InputStreamSource attachment) {
+                             String attachmentName, InputStreamSource attachment) {
         return new MailDTO(subject, message)
                 .setRecipients(recipients)
                 .setHtml(isHtml)
@@ -67,7 +60,12 @@ public class MailDTO {
                 .setAttachment(attachment);
     }
 
-
+    public String getFirstRecipient() {
+        if (CollectionUtils.isEmpty(recipients)) {
+            throw new InternalException("Could not get any recipient");
+        }
+        return recipients.get(0);
+    }
 
 
 }

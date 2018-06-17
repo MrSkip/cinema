@@ -1,5 +1,6 @@
 package com.countrycinema.ua.persistence.entity.film;
 
+import com.countrycinema.ua.dto.film.trailer.TrailerRequestDTO;
 import com.countrycinema.ua.persistence.entity._core.time.TimeComponentLong;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,4 +26,9 @@ public class Trailer extends TimeComponentLong<Trailer> {
     @JoinColumn(name = "film_id")
     private Film film;
 
+    public void fetch(TrailerRequestDTO dto) {
+        name = dto.getName();
+        link = dto.getLink();
+        text = dto.getText();
+    }
 }

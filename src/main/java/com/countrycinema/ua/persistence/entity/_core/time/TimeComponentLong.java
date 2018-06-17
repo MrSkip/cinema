@@ -27,6 +27,7 @@ public class TimeComponentLong<T extends TimeComponentLong> extends IdComponentL
         this.modifiedTime = now;
     }
 
+
     @PreUpdate
     public void preUpdate() {
         this.modifiedTime = nowTime();

@@ -33,12 +33,12 @@ public class MessageDTO<T> {
     }
 
     @SuppressWarnings("all")
-    public static<T> MessageDTO ofGeneric(T data) {
+    public static <T> MessageDTO ofGeneric(T data) {
         return new MessageDTO(data);
     }
 
     @SuppressWarnings("all")
-    public static<T> MessageDTO of(String message, T data) {
+    public static <T> MessageDTO of(String message, T data) {
         return new MessageDTO(message, data);
     }
 

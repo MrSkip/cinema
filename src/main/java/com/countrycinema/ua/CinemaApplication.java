@@ -14,7 +14,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.TimeZone;
 
 @SpringBootApplication
@@ -26,7 +25,7 @@ public class CinemaApplication {
 
     @PostConstruct
     void started() {
-        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+//        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
     }
 
     @Bean

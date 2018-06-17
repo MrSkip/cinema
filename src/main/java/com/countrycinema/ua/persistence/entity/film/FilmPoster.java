@@ -20,6 +20,8 @@ public class FilmPoster extends IdComponentLong<FilmPoster> {
     private String pathOnLocal;
     @Column(name = "pathOnRemote")
     private String pathOnRemote;
+    @Column(name = "link")
+    private String link;
     @Column(name = "text")
     private String text;
 

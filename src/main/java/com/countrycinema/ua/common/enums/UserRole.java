@@ -16,23 +16,27 @@ public enum UserRole {
         this.name = name;
     }
 
-    public String getName() {
-        return name;
-    }
-
     @JsonCreator
     public static UserRole softInstanceOf(String name) {
         if (name == null) {
             throw new BadInputParamException();
         }
         switch (name) {
-            case "SUPER_ADMIN": return SUPER_ADMIN;
-            case "COMPANY_ADMIN": return COMPANY_ADMIN;
-            case "CONTENT_MAKER": return CONTENT_MAKER;
-            case "USER": return USER;
+            case "SUPER_ADMIN":
+                return SUPER_ADMIN;
+            case "COMPANY_ADMIN":
+                return COMPANY_ADMIN;
+            case "CONTENT_MAKER":
+                return CONTENT_MAKER;
+            case "USER":
+                return USER;
         }
 
         throw new BadInputParamException();
+    }
+
+    public String getName() {
+        return name;
     }
 
 }

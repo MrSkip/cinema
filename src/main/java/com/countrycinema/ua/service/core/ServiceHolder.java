@@ -8,8 +8,8 @@ import java.util.concurrent.ConcurrentMap;
 
 public abstract class ServiceHolder<E extends IdComponent, ID> {
 
-    private static ConcurrentMap<Class,? extends OptionalRepository> repositories;
-    private static ConcurrentMap<Class,? extends ServiceCoreImpl> services;
+    private static ConcurrentMap<Class, ? extends OptionalRepository> repositories;
+    private static ConcurrentMap<Class, ? extends ServiceCoreImpl> services;
 
     static {
         repositories = new ConcurrentHashMap<>();

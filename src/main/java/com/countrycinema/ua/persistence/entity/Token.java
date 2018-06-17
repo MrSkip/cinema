@@ -14,18 +14,17 @@ import javax.persistence.*;
 @EqualsAndHashCode(callSuper = true, exclude = "user")
 public class Token extends TimeComponentLong<Token> {
 
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+    @Column(name = "token")
+    private String token;
+
     public Token() {
     }
 
     public Token(String token) {
         this.token = token;
     }
-
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @Column(name = "token")
-    private String token;
 
 }
